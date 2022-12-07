@@ -6,11 +6,12 @@ class User(AbstractUser):
     pass
 
 class AuctionListing(models.Model):
+    is_active = models.BooleanField(default=True)
     title = models.CharField(max_length=60)
     description = models.TextField(max_length=600)
     current_price = models.FloatField()
     photo = models.URLField()
     category = models.CharField(max_length=20)
 
-    # def __str__(self):
-    #     return f"Title: {self.title} description: {self.description} photo: {self.photo}"
+    def __str__(self):
+        return f"{self.title}"

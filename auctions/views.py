@@ -8,11 +8,9 @@ from .models import User, AuctionListing
 
 
 def index(request):
-    listing = AuctionListing.objects.all()
-    clean_listing = listing.first()
-
+    active_listing = AuctionListing.objects.filter(is_active=True)
     return render(request, "auctions/index.html", {
-        "listings": clean_listing
+        "listings": active_listing
     })
 
 
