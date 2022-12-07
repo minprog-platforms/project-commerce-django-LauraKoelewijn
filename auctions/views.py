@@ -70,4 +70,7 @@ def createlisting(request):
     return render(request, "auctions/create.html")
 
 def watchlist(request):
-    return render(request, "auctions/watchlist.html")
+    active_listing = AuctionListing.objects.filter(is_active=True)
+    return render(request, "auctions/watchlist.html", {
+        "favorites": active_listing
+    })

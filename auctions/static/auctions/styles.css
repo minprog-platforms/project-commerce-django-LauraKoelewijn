@@ -2,6 +2,12 @@ body {
     padding: 20px;
 }
 
+h1, h2 {
+    font: Helvetica;
+    font-weight: 100;
+    text-align: center;
+}
+
  /* Helper Styles */
 body {
     font-family: Helvetica, sans-serif;
@@ -13,7 +19,11 @@ a {
     text-decoration: none;
 }
 
-Card Styles
+.account {
+    margin-left: 15.5px;
+}
+
+/* Card Styles */
 
 .card-sl {
     border-radius: 8px;
