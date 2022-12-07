@@ -1,8 +1,8 @@
 # Application Name
 
-TODO: Describe your application here.
+An eBay-like e-commerce auction site that will allow users to post auction listings, place bids on listings, comment on those listings, and add listings to a “watchlist.”
 
 
 ## Getting Started
 
-TODO: Describe steps to install requirements and get the application running.
+Run the following command in your terminal: python -m pip install -r requirements.txt
