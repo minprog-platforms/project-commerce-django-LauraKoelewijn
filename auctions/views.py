@@ -8,8 +8,11 @@ from .models import User, AuctionListing
 
 
 def index(request):
+    listing = AuctionListing.objects.all()
+    clean_listing = listing.first()
+
     return render(request, "auctions/index.html", {
-        "listing": AuctionListing.objects.all()
+        "listings": clean_listing
     })
 
 

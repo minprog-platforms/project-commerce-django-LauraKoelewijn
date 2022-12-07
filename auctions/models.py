@@ -12,5 +12,5 @@ class AuctionListing(models.Model):
     photo = models.URLField()
     category = models.CharField(max_length=20)
 
-    def __str__(self):
-        return f"title: {self.title}"
+    # def __str__(self):
+    #     return f"Title: {self.title} description: {self.description} photo: {self.photo}"

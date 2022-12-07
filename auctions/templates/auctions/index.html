@@ -3,6 +3,37 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    <p> {{ listing }} </p>
+
+    <div class="container" style="margin-top:50px;">
+      <div class="row">
+          <div class="col-md-3">
+              <div class="card-sl">
+                  <div class="card-image">
+                      <img
+                          src="{{ listings.photo }}" alt= "{{ listings.title }}">
+                  </div>
+
+                  <a class="card-action" href="#">&hearts;</a>
+                  <div class="card-heading">
+                      {{ listings.title }}
+                  </div>
+                  <div class="card-text">
+                      {{ listings.description }}
+                  </div>
+                  <div class="card-text">
+                      {{ listings.current_price }}
+                  </div>
+                  <a href="#" class="card-button"> Bid</a>
+              </div>
+          </div>
+      </div>
+
+
+
+
+
+
+
+
 
 {% endblock %}
