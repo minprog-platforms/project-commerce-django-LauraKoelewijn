@@ -6,3 +6,10 @@ An eBay-like e-commerce auction site that will allow users to post auction listi
 ## Getting Started
 
 Run the following command in your terminal: python -m pip install -r requirements.txt
+
+
+## Class Diagram
+
+Class diagram:
+
+![Class diagram](/sketches/CLASSDIAGRAM.jpg)
