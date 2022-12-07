@@ -11,3 +11,6 @@ class AuctionListing(models.Model):
     current_price = models.FloatField()
     photo = models.URLField()
     category = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"title: {self.title}"
