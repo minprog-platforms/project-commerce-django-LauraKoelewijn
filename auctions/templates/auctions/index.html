@@ -11,8 +11,10 @@
                         <div class="card-image">
                             <img src="{{ AuctionListing.photo }}" alt= "{{ AuctionListing.title }}">
                         </div>
-
-                        <a class="card-action" href="#">&hearts;</a>
+                        <form action="{% url 'watchlist' %}" method="POST"
+                            <input type="submit" class="card-action">&hearts;</input>
+                            {% csrf_token %}
+                        </form>
                         <div class="card-heading">
                             {{ AuctionListing.title }}
                         </div>
