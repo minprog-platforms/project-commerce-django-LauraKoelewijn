@@ -77,8 +77,28 @@ def createlisting(request):
         return render(request, "auctions/create.html", {
             "category": Categories.objects.all()
         })
-    # else:
-        #TODO
+    else:
+        # the data needed to save the new listing
+        # extracted from the form in create.html
+        title = request.POST["title"]
+        description = request.POST["description"]
+        current_price = request.POST["price"]
+        photo = request.POST["photo"]
+        category = request.POST["category"]
+        seller = request.user
+        category_option = Categories.objects.get(category_options=category)
+
+        # here I create a new AuctionListing object
+        new_listing = AuctionListing(
+            title=title,
+            description=description,
+            photo=photo,
+            current_price=current_price,
+            seller=seller
+        )
+        new_listing.save()
+        # Redirect to index page
+        return HttpResponseRedirect(reverse(index))
 
 def watchlist(request):
     if request.method == "GET":
