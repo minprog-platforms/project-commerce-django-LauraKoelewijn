@@ -3,30 +3,22 @@
 {% block body %}
     <h2>{{ listing.title }}</h2>
 
-    <div class="container" style="margin-top:50px;">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card-sl">
-                    <div class="card-image">
-                        <img src="{{ listing.photo }}" alt= "{{ listing.title }}">
-                    </div>
-                    <form action="{% url 'watchlist' %}" method="POST"
-                        <input type="submit" class="card-action">&hearts;</input>
-                        {% csrf_token %}
-                    </form>
-                    <div class="card-heading">
-                        {{ listing.title }}
-                    </div>
-                    <div class="card-text">
-                        {{ listing.description }}
-                    </div>
-                    <div class="card-text">
-                        Current price: €{{ listing.current_price }}
-                    </div>
-                    <a href="#" class="card-button"> Bid</a>
-                </div>
-            </div>
+    <br>
+
+    <div class="row">
+        <div class="col-md-6">
+            <img style="max-width:500px;" src="{{ listing.photo }}" alt= "{{ listing.title }}">
         </div>
-    </div>
+
+        <div class="col-md-6">
+            <h3{{ listing.title }}</h3>
+            <p>{{ listing.description }}</p>
+            <br>
+            <p>Seller: {{ listing.seller }}</p>
+            <br>
+            <p>Current price: €{{ listing.current_price }}</p>
+            <button type="submit" class="btn btn-dark">Bid</button>
+        </div>
+    </div
 
 {% endblock %}
