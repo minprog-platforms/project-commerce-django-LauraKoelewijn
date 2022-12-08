@@ -13,6 +13,12 @@ def index(request):
         "listings": active_listing
     })
 
+def listing(request, id):
+    listingdetails = AuctionListing.objects.get(pk=id)
+    return render(request, "auctions/listing.html", {
+        "listing": listingdetails
+    })
+
 
 def login_view(request):
     if request.method == "POST":

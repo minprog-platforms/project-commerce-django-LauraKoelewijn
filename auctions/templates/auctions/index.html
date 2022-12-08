@@ -24,7 +24,7 @@
                         <div class="card-text">
                             Current price: €{{ AuctionListing.current_price }}
                         </div>
-                        <a href="#" class="card-button"> Bid</a>
+                        <a href="{% url 'listing' id=AuctionListing.id %}" class="card-button">See more</a>
                     </div>
                 </div>
             {% endfor %}
