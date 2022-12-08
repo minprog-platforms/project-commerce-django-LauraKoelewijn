@@ -10,8 +10,19 @@ from .models import User, Categories, AuctionListing
 def index(request):
     active_listing = AuctionListing.objects.filter(is_active=True)
     return render(request, "auctions/index.html", {
-        "listings": active_listing
+        "listings": active_listing,
+        "category": Categories.objects.all()
     })
+
+def category_sort(request):
+    if request.method == "POST":
+        chosen_category = request.POST['category']
+        category = Categories.objects.get(category_options=chosen_category)
+        active_listing = AuctionListing.objects.filter(is_active=True, category=category)
+        return render(request, "auctions/index.html", {
+            "listings": active_listing,
+            "category": Categories.objects.all()
+        })
 
 def listing(request, id):
     listingdetails = AuctionListing.objects.get(pk=id)

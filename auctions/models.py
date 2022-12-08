@@ -19,6 +19,7 @@ class AuctionListing(models.Model):
     photo = models.URLField()
     seller = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="user")
     category = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True, related_name="category")
+    
 
     def __str__(self):
         return f"{self.title}"

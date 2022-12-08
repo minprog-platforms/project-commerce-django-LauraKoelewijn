@@ -19,6 +19,11 @@ a {
     text-decoration: none;
 }
 
+label {
+    display: inline-block;
+    margin-left: 15.5px;
+}
+
 .account {
     margin-left: 15.5px;
 }
