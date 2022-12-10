@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -83,17 +84,29 @@ def listing(request, id):
     })
 
 def newbid(request, id):
-    bid = ('%.2f' % float(request.POST["bid"]))
+    # get the new bid from form
+    bid = float('%.2f' % float(request.POST["bid"]))
+    # get info about page
     listingdetails = AuctionListing.objects.get(pk=id)
-    new_bid = Bid(bid=bid, bidder=request.user)
-    bidder = Bid.bidder
-    new_bid.save()
-    listingdetails.current_price = new_bid
-    listingdetails.save()
-    return render(request, "auctions/listing.html", {
-        "listing": listingdetails,
-        "bidder": bidder
-    })
+    # if the new bid is bigger than the previous, page has to be updated
+    if bid > listingdetails.current_price.bid:
+        # create a new bid object
+        new_bid = Bid(bid=('%.2f' % bid), bidder=request.user)
+        # save the new bid
+        new_bid.save()
+        # update the current price on the page
+        listingdetails.current_price = new_bid
+        # save updated version of the page
+        listingdetails.save()
+        return render(request, "auctions/listing.html", {
+            "listing": listingdetails
+        })
+    else:
+        messages.error(request,'The bid you placed is lower than the current bid.')
+        listingdetails = AuctionListing.objects.get(pk=id)
+        return render(request, "auctions/listing.html", {
+            "listing": listingdetails
+        })
 
 def createlisting(request):
     if request.method == "GET":

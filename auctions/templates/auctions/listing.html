@@ -5,6 +5,16 @@
 
     <br>
 
+    {% for message in messages %}
+
+        <div class="alert alert-danger">
+            <a class="close" href="{% url 'listing' id=listing.id %}"" data-dismiss="alert">×</a>
+               {{ message }}
+        </div>
+
+    {% endfor %}
+
+
     <div class="row">
         <div class="col-md-6">
             <img style="max-width:500px;" src="{{ listing.photo }}" alt= "{{ listing.title }}">
@@ -22,7 +32,7 @@
 
                 {% csrf_token %}
 
-                <input type="text" name="bid" placeholder="Higher than current bid">
+                <input type="text" name="bid" placeholder="Starting at €{{ listing.current_price }}">
                 <button type="submit" class="btn btn-dark">Place bid</button>
             </form>
             {% endif %}
