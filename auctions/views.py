@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Categories, AuctionListing
+from .models import User, Categories, AuctionListing, Bid
 
 
 def index(request):
@@ -23,12 +23,6 @@ def category_sort(request):
             "listings": active_listing,
             "category": Categories.objects.all()
         })
-
-def listing(request, id):
-    listingdetails = AuctionListing.objects.get(pk=id)
-    return render(request, "auctions/listing.html", {
-        "listing": listingdetails
-    })
 
 
 def login_view(request):
@@ -82,6 +76,24 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
+def listing(request, id):
+    listingdetails = AuctionListing.objects.get(pk=id)
+    return render(request, "auctions/listing.html", {
+        "listing": listingdetails
+    })
+
+def newbid(request, id):
+    bid = ('%.2f' % float(request.POST["bid"]))
+    bidder = request.user
+    listingdetails = AuctionListing.objects.get(pk=id)
+    new_bid = Bid(bid=bid, bidder=request.user)
+    new_bid.save()
+    listingdetails.current_price = new_bid
+    listingdetails.save()
+    return render(request, "auctions/listing.html", {
+        "listing": listingdetails,
+        "bidder": bidder
+    })
 
 def createlisting(request):
     if request.method == "GET":
@@ -98,18 +110,22 @@ def createlisting(request):
         category = request.POST["category"]
         seller = request.user
         category_option = Categories.objects.get(category_options=category)
-
+        # create bid as a first price
+        bid = Bid(bid=float(current_price), bidder=seller)
+        # and save it
+        bid.save()
         # here I create a new AuctionListing object
         new_listing = AuctionListing(
             title=title,
             description=description,
             photo=photo,
-            current_price=current_price,
+            current_price=bid,
             seller=seller
         )
         new_listing.save()
         # Redirect to index page
         return HttpResponseRedirect(reverse(index))
+
 
 def watchlist(request):
     if request.method == "GET":

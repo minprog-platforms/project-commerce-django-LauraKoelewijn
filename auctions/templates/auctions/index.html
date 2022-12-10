@@ -6,7 +6,7 @@
         {% csrf_token %}
         <label for="category">Choose a category:</label>
         <select name="category" id="category" onchange="this.form.submit()">
-            <option value="none" selected disabled hidden>Select a catagory</option>
+            <option value="none" selected disabled hidden>Select a category</option>
             {% for option in category %}
                 <option value="{{ option }}">{{ option }}</option>
             {% endfor %}
