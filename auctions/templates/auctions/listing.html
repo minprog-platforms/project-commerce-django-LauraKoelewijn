@@ -16,14 +16,13 @@
             <br>
             <p>Seller: {{ listing.seller }}</p>
             <br>
-            <p>Current price: €{{ listing.current_price }}</p>
-            <p>Highest bid placed by {{ bidder }}
+            <p>{{ listing.current_price.str_return_sentence }}</p>
             {% if user.is_authenticated %}
             <form action="{% url 'newbid' id=listing.id %}" method="POST">
 
                 {% csrf_token %}
 
-                <input type="text" name="bid" placeholder="Higher than €{{ listing.current_price }}">
+                <input type="text" name="bid" placeholder="Higher than current bid">
                 <button type="submit" class="btn btn-dark">Place bid</button>
             </form>
             {% endif %}

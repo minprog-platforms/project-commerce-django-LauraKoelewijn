@@ -15,8 +15,12 @@ class Bid(models.Model):
     bid = models.DecimalField(max_digits=10, decimal_places=2)
     bidder = models.ForeignKey(User, max_length=64, on_delete=models.CASCADE, related_name="bidder_user")
 
+    def str_return_sentence(self):
+        return f"Highest bid is currently €{self.bid}, placed by {self.bidder}!"
+
     def __str__(self):
         return f"{self.bid}"
+
 
 class AuctionListing(models.Model):
     is_active = models.BooleanField(default=True)

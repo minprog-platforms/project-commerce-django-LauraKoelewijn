@@ -84,9 +84,9 @@ def listing(request, id):
 
 def newbid(request, id):
     bid = ('%.2f' % float(request.POST["bid"]))
-    bidder = request.user
     listingdetails = AuctionListing.objects.get(pk=id)
     new_bid = Bid(bid=bid, bidder=request.user)
+    bidder = Bid.bidder
     new_bid.save()
     listingdetails.current_price = new_bid
     listingdetails.save()
