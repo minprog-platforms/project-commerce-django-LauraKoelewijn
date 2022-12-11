@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Categories, AuctionListing, Bid
+from .models import User, Categories, AuctionListing, Bid, Comment
 
 
 def index(request):
@@ -79,8 +79,10 @@ def register(request):
 
 def listing(request, id):
     listingdetails = AuctionListing.objects.get(pk=id)
+    all_comments = Comment.objects.filter(listing=listingdetails)
     return render(request, "auctions/listing.html", {
-        "listing": listingdetails
+        "listing": listingdetails,
+        "all_comments": all_comments
     })
 
 def newbid(request, id):
@@ -91,7 +93,10 @@ def newbid(request, id):
     # if the new bid is bigger than the previous, page has to be updated
     if bid > listingdetails.current_price.bid:
         # create a new bid object
-        new_bid = Bid(bid=('%.2f' % bid), bidder=request.user)
+        new_bid = Bid(
+            bid=('%.2f' % bid),
+            bidder=request.user
+        )
         # save the new bid
         new_bid.save()
         # update the current price on the page
@@ -107,6 +112,23 @@ def newbid(request, id):
         return render(request, "auctions/listing.html", {
             "listing": listingdetails
         })
+
+def comment(request, id):
+    # get comment from form
+    comment = request.POST["comment"]
+    commenter = request.user
+    # get info from page
+    listingdetails = AuctionListing.objects.get(pk=id)
+    # create new comment object
+    new_comment = Comment(
+        comment=comment,
+        commenter=commenter,
+        listing=listingdetails
+        )
+
+    new_comment.save()
+
+    return HttpResponseRedirect(reverse("listing",args=(id, )))
 
 def createlisting(request):
     if request.method == "GET":

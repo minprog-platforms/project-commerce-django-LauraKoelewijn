@@ -33,3 +33,11 @@ class AuctionListing(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+class Comment(models.Model):
+    comment = models.CharField(max_length=150)
+    commenter = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="user_comment")
+    listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE, blank=True, null=True, related_name="listing_comment")
+
+    def __str__(self):
+        return f'"{self.comment}" -{self.commenter}'

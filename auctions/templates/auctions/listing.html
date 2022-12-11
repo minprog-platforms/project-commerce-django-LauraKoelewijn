@@ -2,22 +2,37 @@
 
 {% block body %}
     <h2>{{ listing.title }}</h2>
+    <br>
 
+    {% for comment in all_comments %}
+        <em>{{ comment }}</em><br>
+    {% endfor %}
     <br>
 
     {% for message in messages %}
-
         <div class="alert alert-danger">
             <a class="close" href="{% url 'listing' id=listing.id %}"" data-dismiss="alert">×</a>
                {{ message }}
         </div>
-
     {% endfor %}
-
 
     <div class="row">
         <div class="col-md-6">
             <img style="max-width:500px;" src="{{ listing.photo }}" alt= "{{ listing.title }}">
+            <br><br>
+
+            {% if user.is_authenticated %}
+            <form action="{% url 'comment' id=listing.id %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <p>Add comment:</p>
+                    <textarea type="text" name="comment" class="form-control" id="comment" placeholder="Enter comment here"></textarea>
+                    <br>
+                    <button type="submit" class="btn btn-dark">Place comment</button>
+                </div>
+            </form>
+            {% endif %}
+
         </div>
 
         <div class="col-md-6">
@@ -29,12 +44,11 @@
             <p>{{ listing.current_price.str_return_sentence }}</p>
             {% if user.is_authenticated %}
             <form action="{% url 'newbid' id=listing.id %}" method="POST">
-
                 {% csrf_token %}
-
                 <input type="text" name="bid" placeholder="Starting at €{{ listing.current_price }}">
                 <button type="submit" class="btn btn-dark">Place bid</button>
             </form>
+
             {% endif %}
         </div>
     </div
