@@ -33,6 +33,7 @@ class AuctionListing(models.Model):
     photo = models.URLField()
     seller = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="user")
     category = models.ForeignKey(Categories, on_delete=models.CASCADE, blank=True, null=True, related_name="category")
+    watchlist = models.ManyToManyField(User, blank=True, null=True, related_name="watchlist_user")
 
     def __str__(self):
         return f"{self.title}"

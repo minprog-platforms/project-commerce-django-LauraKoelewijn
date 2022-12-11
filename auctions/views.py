@@ -79,10 +79,12 @@ def register(request):
 
 def listing(request, id):
     listingdetails = AuctionListing.objects.get(pk=id)
+    in_watchlist = request.user in listingdetails.watchlist.all()
     all_comments = Comment.objects.filter(listing=listingdetails)
     return render(request, "auctions/listing.html", {
         "listing": listingdetails,
-        "all_comments": all_comments
+        "all_comments": all_comments,
+        "in_watchlist": in_watchlist
     })
 
 def newbid(request, id):
@@ -174,21 +176,21 @@ def createlisting(request):
         # Redirect to index page
         return HttpResponseRedirect(reverse(index))
 
+def remove_from_watchlist(request, id):
+    listingdetails = AuctionListing.objects.get(pk=id)
+    user = request.user
+    listingdetails.watchlist.remove(user)
+    return HttpResponseRedirect(reverse("listing",args=(id, )))
+
+def add_to_watchlist(request, id):
+    listingdetails = AuctionListing.objects.get(pk=id)
+    user = request.user
+    listingdetails.watchlist.add(user)
+    return HttpResponseRedirect(reverse("listing",args=(id, )))
 
 def watchlist(request):
-    watchlist = []
-    if request.method == "POST":
-        watchlist.append
-
-
-
-
-    # if request.method == "GET":
-    #     return render(request, "auctions/watchlist.html", {
-    #         "favorites": "favorietjes"
-    #     })
-    # else:
-    #     item = request.POST["title"]
-    #     return render(request, "auctions/watchlist.html", {
-    #         "favorites": item
-    #     })
+    user = request.user
+    watchlist_user = user.watchlist_user.all()
+    return render(request, "auctions/watchlist.html", {
+        "listings": watchlist_user
+    })
