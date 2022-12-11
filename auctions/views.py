@@ -130,6 +130,19 @@ def comment(request, id):
 
     return HttpResponseRedirect(reverse("listing",args=(id, )))
 
+def close(request, id):
+    if request.method == "POST":
+        listingdetails = AuctionListing.objects.get(pk=id)
+        # make the page inactive
+        listingdetails.is_active = False
+        listingdetails.save()
+        all_comments = Comment.objects.filter(listing=listingdetails)
+        return render(request, "auctions/closed_auction.html", {
+            "listing": listingdetails,
+            "all_comments": all_comments
+        })
+
+
 def createlisting(request):
     if request.method == "GET":
         return render(request, "auctions/create.html", {
@@ -163,12 +176,19 @@ def createlisting(request):
 
 
 def watchlist(request):
-    if request.method == "GET":
-        return render(request, "auctions/watchlist.html", {
-            "favorites": "favorietjes"
-        })
-    else:
-        item = request.POST["title"]
-        return render(request, "auctions/watchlist.html", {
-            "favorites": item
-        })
+    watchlist = []
+    if request.method == "POST":
+        watchlist.append
+
+
+
+
+    # if request.method == "GET":
+    #     return render(request, "auctions/watchlist.html", {
+    #         "favorites": "favorietjes"
+    #     })
+    # else:
+    #     item = request.POST["title"]
+    #     return render(request, "auctions/watchlist.html", {
+    #         "favorites": item
+    #     })

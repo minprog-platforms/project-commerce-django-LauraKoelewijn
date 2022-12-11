@@ -21,6 +21,9 @@ class Bid(models.Model):
     def __str__(self):
         return f"{self.bid}"
 
+    def winner(self):
+        return f"Highest bid of €{self.bid} was placed by {self.bidder}, congratulations {self.bidder}!"
+
 
 class AuctionListing(models.Model):
     is_active = models.BooleanField(default=True)
