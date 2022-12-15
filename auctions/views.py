@@ -170,7 +170,8 @@ def createlisting(request):
             description=description,
             photo=photo,
             current_price=bid,
-            seller=seller
+            seller=seller,
+            category=category_option
         )
         new_listing.save()
         # Redirect to index page
