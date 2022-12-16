@@ -13,3 +13,7 @@ Run the following command in your terminal: python -m pip install -r requirement
 Class diagram:
 
 ![Class diagram](/sketches/CLASSDIAGRAM.jpg)
+
+## Screencast
+
+https://video.uva.nl/media/Screencast+Commerce+MinProg+-+Laura+Koelewijn/0_vttbf1w6
